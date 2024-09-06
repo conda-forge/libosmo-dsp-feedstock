@@ -8,8 +8,10 @@ package:
   version: {{ version }}
 
 source:
-  url: https://gitea.osmocom.org/sdr/libosmo-dsp/archive/{{ version }}.tar.gz
-  sha256: e118d6ab7fd0efcbc8d2b5d8f531a1e28c0ec94a40e82ff7a3c28e7dc5263d6a
+  #url: https://gitea.osmocom.org/sdr/libosmo-dsp/archive/{{ version }}.tar.gz
+  #sha256: e118d6ab7fd0efcbc8d2b5d8f531a1e28c0ec94a40e82ff7a3c28e7dc5263d6a
+  url: https://github.com/osmocom/libosmo-dsp/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 61658f58f10f4ae283d129ea9fa9445b6697ef8dcb6a88db44ab4d6cbe0cd44d
   patches:
     - 0001-Add-Windows-port-for-cfile-s-use-of-mmap-munmap.patch
     - 0002-Let-Windows-build-create-a-shared-library-by-passing.patch
@@ -28,11 +30,11 @@ requirements:
     - {{ posix }}autoconf
     - {{ posix }}automake  # [unix]
     - {{ posix }}automake-wrapper  # [win]
+    - {{ posix }}base  # [win]
     - {{ posix }}libtool
-    - make  # [unix]
+    - {{ posix }}make
     - m2w64-pkg-config  # [win]
     - pkg-config  # [unix]
-    - posix  # [win]
   host:
     - fftw
 

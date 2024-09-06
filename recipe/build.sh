@@ -27,7 +27,7 @@ if [[ "$target_platform" == win-64 ]]; then
 fi
 
 autoreconf "${autoreconf_args[@]}"
-./configure "${configure_args[@]}"
+./configure "${configure_args[@]}" || cat config.log
 make V=1 -j${CPU_COUNT}
 make install
 
