@@ -33,7 +33,7 @@ requirements:
     - {{ posix }}base  # [win]
     - {{ posix }}libtool
     - {{ posix }}make
-    - {{ posix }}pkg-config
+    - pkg-config
   host:
     - fftw
 
