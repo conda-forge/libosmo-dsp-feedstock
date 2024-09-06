@@ -1,11 +1,15 @@
 @echo on
 
+:: remove m2-pkg-config's pkg-config in favor of native
+if exist %LIBRARY_PREFIX%\usr\bin\pkg-config.exe del /f %LIBRARY_PREFIX%\usr\bin\pkg-config.exe
+
 echo source %SYS_PREFIX:\=/%/etc/profile.d/conda.sh    > conda_build.sh
 echo conda activate "${PREFIX}"                       >> conda_build.sh
 echo conda activate --stack "${BUILD_PREFIX}"         >> conda_build.sh
 echo CONDA_PREFIX=${CONDA_PREFIX//\\//}               >> conda_build.sh
 type "%RECIPE_DIR%\build.sh"                          >> conda_build.sh
 
+set PKG_CONFIG_PATH=%PKG_CONFIG_PATH:\=/%
 set PREFIX=%LIBRARY_PREFIX:\=/%
 set BUILD_PREFIX=%BUILD_PREFIX:\=/%
 set CONDA_PREFIX=%CONDA_PREFIX:\=/%

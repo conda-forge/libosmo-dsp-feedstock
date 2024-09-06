@@ -33,7 +33,9 @@ requirements:
     - {{ posix }}base  # [win]
     - {{ posix }}libtool
     - {{ posix }}make
-    - {{ posix }}pkg-config
+    # want m2-pkg-config in addition to pkg-config so we can get pkg.m4 from it
+    - {{ posix }}pkg-config  # [win]
+    - pkg-config
   host:
     - fftw
 
