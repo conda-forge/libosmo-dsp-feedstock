@@ -16,13 +16,15 @@ source:
     - 0003-Use-std-complex-float-when-compiling-with-C-for-cons.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
     # need default C compiler on Windows too (MSVC) for generating import lib
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib("m2w64_c") }}    # [win]
     - {{ posix }}autoconf
     - {{ posix }}automake  # [unix]
     - {{ posix }}automake-wrapper  # [win]
@@ -39,6 +41,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}  # [unix]
+        - {{ stdlib("c") }}    # [unix]
         # DSO analysis shows that m2w64-gcc-libs* are not needed at runtime
         # so we don't need {{ compiler('m2w64_c') }} as a build dep
       host:
