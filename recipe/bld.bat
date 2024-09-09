@@ -9,10 +9,10 @@ echo conda activate --stack "${BUILD_PREFIX}"         >> conda_build.sh
 echo CONDA_PREFIX=${CONDA_PREFIX//\\//}               >> conda_build.sh
 type "%RECIPE_DIR%\build.sh"                          >> conda_build.sh
 
-set PREFIX=%PREFIX:\=/%
-set BUILD_PREFIX=%BUILD_PREFIX:\=/%
-set CONDA_PREFIX=%CONDA_PREFIX:\=/%
-set SRC_DIR=%SRC_DIR:\=/%
+FOR /F "delims=" %%i in ('cygpath.exe -u "%PREFIX%"') DO set "PREFIX=%%i"
+FOR /F "delims=" %%i in ('cygpath.exe -u "%BUILD_PREFIX%"') DO set "BUILD_PREFIX=%%i"
+FOR /F "delims=" %%i in ('cygpath.exe -u "%CONDA_PREFIX%"') DO set "CONDA_PREFIX=%%i"
+FOR /F "delims=" %%i in ('cygpath.exe -u "%SRC_DIR%"') DO set "SRC_DIR=%%i"
 set MSYSTEM=UCRT64
 set MSYS2_PATH_TYPE=inherit
 set CHERE_INVOKING=1
