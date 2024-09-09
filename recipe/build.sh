@@ -2,6 +2,10 @@
 
 set -ex
 
+if [[ "$target_platform" == "win-64" ]]; then
+  export PREFIX=${PREFIX}/Library
+fi
+
 autoreconf_args=(
   --force
   --install
@@ -20,6 +24,8 @@ if [[ "$target_platform" == win-64 ]]; then
   autoreconf_args+=(
     -I "$BUILD_PREFIX/Library/usr/share/aclocal"
   )
+  # so we can find packages with pkg-config (e.g. fftw)
+  export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PREFIX/share/pkgconfig
   # so we can make shared libs without overzealous checking
   export lt_cv_deplibs_check_method=pass_all
 fi
