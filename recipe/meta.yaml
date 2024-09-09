@@ -8,29 +8,34 @@ package:
   version: {{ version }}
 
 source:
-  url: https://gitea.osmocom.org/sdr/libosmo-dsp/archive/{{ version }}.tar.gz
-  sha256: e118d6ab7fd0efcbc8d2b5d8f531a1e28c0ec94a40e82ff7a3c28e7dc5263d6a
+  #url: https://gitea.osmocom.org/sdr/libosmo-dsp/archive/{{ version }}.tar.gz
+  #sha256: e118d6ab7fd0efcbc8d2b5d8f531a1e28c0ec94a40e82ff7a3c28e7dc5263d6a
+  url: https://github.com/osmocom/libosmo-dsp/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 61658f58f10f4ae283d129ea9fa9445b6697ef8dcb6a88db44ab4d6cbe0cd44d
   patches:
     - 0001-Add-Windows-port-for-cfile-s-use-of-mmap-munmap.patch
     - 0002-Let-Windows-build-create-a-shared-library-by-passing.patch
     - 0003-Use-std-complex-float-when-compiling-with-C-for-cons.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
     # need default C compiler on Windows too (MSVC) for generating import lib
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib("m2w64_c") }}    # [win]
     - {{ posix }}autoconf
     - {{ posix }}automake  # [unix]
     - {{ posix }}automake-wrapper  # [win]
+    - {{ posix }}base  # [win]
     - {{ posix }}libtool
-    - make  # [unix]
-    - m2w64-pkg-config  # [win]
-    - pkg-config  # [unix]
-    - posix  # [win]
+    - {{ posix }}make
+    # want m2-pkg-config in addition to pkg-config so we can get pkg.m4 from it
+    - {{ posix }}pkg-config  # [win]
+    - pkg-config
   host:
     - fftw
 
@@ -39,6 +44,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}  # [unix]
+        - {{ stdlib("c") }}    # [unix]
         # DSO analysis shows that m2w64-gcc-libs* are not needed at runtime
         # so we don't need {{ compiler('m2w64_c') }} as a build dep
       host:
