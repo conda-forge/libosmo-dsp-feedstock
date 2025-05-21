@@ -9,10 +9,10 @@ Subject: [PATCH] Add Windows port for cfile's use of mmap/munmap
  2 files changed, 34 insertions(+), 2 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 964ef03..87164ad 100644
+index f9a4407..eb4c78f 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -26,8 +26,9 @@ dnl checks for libraries
+@@ -31,8 +31,9 @@ dnl checks for libraries
  PKG_CHECK_MODULES(FFTW3F, fftw3f >= 3.2.0)
  
  dnl checks for header files
@@ -86,5 +86,5 @@ index 4fa927f..ae4ad8d 100644
  		perror("mmap");
  		goto err;
 -- 
-2.40.0
+2.47.1
 
